@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<global-property doc:name="Global Property" doc:id="47ec31d6-0e44-4508-91f1-b669beb77c1e" name="env" value="dev" />
+	<configuration-properties doc:name="Configuration properties" doc:id="9d8605bc-91eb-40fb-a739-2057ee71a32b" file="properties/${env}.yaml" />
+	
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="36e2afd0-0f04-4785-858a-cc5e003070eb" file="properties/${env}.yaml" key="${secure.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<http:listener-config name="http_listener_config1" doc:name="HTTP Listener config" doc:id="5396a670-98d2-44b3-92e8-80587e709653" >
+		<http:listener-connection host="${https.host}" port="${https.port}" readTimeout="${https.readTimeout}" />
+	</http:listener-config>
+	<api-gateway:autodiscovery apiId="${api.autodiscovery}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="39c2406e-92a4-47fc-a635-2e23d1a287ad" flowRef="cin7-sys-api-main" />
+</mule>

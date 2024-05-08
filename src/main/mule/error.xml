@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="global-error-Handler" doc:id="7dfcf660-0798-4487-bb45-145ebca000c8" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="9d869834-245e-4375-ac1f-65e203128898" >
+			<logger level="ERROR" doc:name="Log Error" doc:id="76b57fbd-78f3-416e-872c-8815a6081bab" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Error",&#10;  MetaData: "Request to CIN7",&#10;  correlationId: correlationId,&#10;  error: error.description&#10;}]'/>
+			<ee:transform doc:name="Error Transformation" doc:id="ca52a7d8-03fa-41ce-8b98-19f94bf7c2fd" >
+				<ee:message >
+					<ee:set-payload resource="dwls/msg-error-default.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable resource="dwls/var-set-error-code.dwl" variableName="httpStatus" />
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+</mule>
