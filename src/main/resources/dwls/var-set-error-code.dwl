@@ -1,1 +1,1 @@
-payload.error.code default 500
+payload.errorCode default 500

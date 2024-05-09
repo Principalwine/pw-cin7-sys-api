@@ -3,6 +3,10 @@ https:
   port: "8081"
   readTimeout: "30000"
   
+request:
+  response:
+    values: '0..599'
+  
 api:
   autodiscovery: "19477721"
   version: "v1"

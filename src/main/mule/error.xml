@@ -4,9 +4,9 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<error-handler name="global-error-Handler" doc:id="7dfcf660-0798-4487-bb45-145ebca000c8" >
+	<!--  <error-handler name="global-error-Handler" doc:id="7dfcf660-0798-4487-bb45-145ebca000c8" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="9d869834-245e-4375-ac1f-65e203128898" >
-			<logger level="ERROR" doc:name="Log Error" doc:id="76b57fbd-78f3-416e-872c-8815a6081bab" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Error",&#10;  MetaData: "Request to CIN7",&#10;  correlationId: correlationId,&#10;  error: error.description&#10;}]'/>
+			<logger level="ERROR" doc:name="Log Error" doc:id="76b57fbd-78f3-416e-872c-8815a6081bab" message='#[%dw 2.0&#10;output application/json&#10;-&#45;&#45;&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Error",&#10;  MetaData: "Request to CIN7",&#10;  correlationId: correlationId,&#10;  error: error.description&#10;}]'/>
 			<ee:transform doc:name="Error Transformation" doc:id="ca52a7d8-03fa-41ce-8b98-19f94bf7c2fd" >
 				<ee:message >
 					<ee:set-payload resource="dwls/msg-error-default.dwl" />
@@ -16,5 +16,95 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 				</ee:variables>
 			</ee:transform>
 		</on-error-propagate>
-	</error-handler>
+	</error-handler> -->
+	
+	<error-handler name="global-error-Handler" doc:id="137b8597-a485-48ac-839e-ba44c047e8d2">
+	<on-error-propagate type="APIKIT:BAD_REQUEST">
+			<ee:transform doc:name="Bad Request">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-bad-request.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[400]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+			<ee:transform doc:name="Not Found">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-notFound.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[404]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+			<ee:transform doc:name="Not Allowed">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-notAllowed.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[405]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+			<ee:transform doc:name="Not Acceptable">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-notAcceptable.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[406]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+			<ee:transform doc:name="Unsupported Media">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-unsupportedMedia.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[415]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+			<ee:transform doc:name="Not Implemented">
+                    <ee:message>
+					<ee:set-payload resource="dwls/msg-error-notImplemented.dwl" />
+                    
+</ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[501]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e88ff5e4-16b1-490d-84b5-2526729b9ca1" type="APP:CIN7-SAPI-ERROR">
+			<ee:transform doc:name="Error Transformation" doc:id="3f8c749d-ed89-4d87-87b0-6820f36a430c" >
+				<ee:message >
+					<ee:set-payload resource="dwls/msg-error-cin7.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable resource="dwls/var-set-error-code.dwl" variableName="httpStatus" />
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="78f0728e-9a3e-4866-a95f-478b493dd217" type="ANY">
+			<ee:transform doc:name="Error Transformation" doc:id="ce413679-98c3-49f5-b4e1-51cba1dd056b" >
+				<ee:message >
+					<ee:set-payload resource="dwls/msg-error-any.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable resource="dwls/var-set-error-code.dwl" variableName="httpStatus" />
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+        
+</error-handler>
 </mule>
