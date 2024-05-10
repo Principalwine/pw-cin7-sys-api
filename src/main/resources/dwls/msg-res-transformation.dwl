@@ -7,7 +7,8 @@ output application/json
 	    (payload.CustomerList[0].Contacts map(obj, index) ->{
 	    	"ID": obj.ID,
 	    	"Name": obj.Name,
-	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn
+	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn,
+	        "SalesRepresentative": obj.SalesRepresentative
 	    })
 	        
 	    
@@ -16,10 +17,5 @@ output application/json
 	        "ID": payload.CustomerList[0].ID,
 	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn
 	    
-    }else{
-    	
-	        "ID": payload.CustomerList[0].ID,
-	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn
-	    
-    })
+    }else	payload)
 }
