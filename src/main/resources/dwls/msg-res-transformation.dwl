@@ -7,15 +7,16 @@ output application/json
 	    (payload.CustomerList[0].Contacts map(obj, index) ->{
 	    	"ID": obj.ID,
 	    	"Name": obj.Name,
-	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn,
-	        "SalesRepresentative": obj.SalesRepresentative
+	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn
+	        
 	    })
 	        
 	    
     else if(vars.requestPayload.operation == "CREATE-CUSTOMER" or vars.requestPayload.operation == "UPDATE-CUSTOMER"){
     	
 	        "ID": payload.CustomerList[0].ID,
-	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn
+	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn,
+	        "SalesRepresentative": payload.CustomerList[0].SalesRepresentative
 	    
     }else	payload)
 }
