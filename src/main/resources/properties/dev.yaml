@@ -35,6 +35,12 @@ operation:
     dwl: "msg-update-customer-req"
     path: "/ExternalApi/v2/customer"
     
+  CREATE-ADDRESS:
+    path: '/ExternalApi/v2/customer'
+    
+  UPDATE-ADDRESS:
+    path: '/ExternalApi/v2/customer'
+    
   GET-CUSTOMER:
     path: "/ExternalApi/v2/customer"
     

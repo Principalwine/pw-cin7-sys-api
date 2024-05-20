@@ -18,5 +18,9 @@ output application/json
 	        "LastModifiedOn": payload.CustomerList[0].LastModifiedOn,
 	        "SalesRepresentative": payload.CustomerList[0].SalesRepresentative
 	    
-    }else	payload)
+    }
+    else if(vars.requestPayload.operation == "CREATE-ADDRESS" or vars.requestPayload.operation == "UPDATE-ADDRESS"){
+    	"Addresses" : payload.CustomerList[0].Addresses
+    }
+    else	payload)
 }
