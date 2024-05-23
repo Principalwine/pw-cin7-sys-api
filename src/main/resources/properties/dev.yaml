@@ -1,0 +1,57 @@
+https:
+  host: "0.0.0.0"
+  port: "8081"
+  readTimeout: "30000"
+  
+request:
+  response:
+    values: '0..599'
+  
+api:
+  autodiscovery: "19477721"
+  version: "v1"
+
+endSystem:
+  CIN7:
+    protocol: "https"
+    host: "inventory.dearsystems.com"  
+    response:
+      timeout: "50000"
+
+operation:
+  CREATE-CUSTOMER:
+    dwl: "msg-create-customer-req"
+    path: "/ExternalApi/v2/customer"
+    
+  UPDATE-CUSTOMER:
+    dwl: "msg-update-customer-req"
+    path: "/ExternalApi/v2/customer"
+    
+  CREATE-CONTACT:
+    dwl: "msg-create-customer-req"
+    path: "/ExternalApi/v2/customer"
+    
+  UPDATE-CONTACT:
+    dwl: "msg-update-customer-req"
+    path: "/ExternalApi/v2/customer"
+    
+  CREATE-ADDRESS:
+    path: '/ExternalApi/v2/customer'
+    
+  UPDATE-ADDRESS:
+    path: '/ExternalApi/v2/customer'
+    
+  GET-CUSTOMER:
+    path: "/ExternalApi/v2/customer"
+    
+  GET-LOCATION:
+    path: "/ExternalApi/v2/ref/location"
+    
+cin7:
+  id: "![1F+4hnZf0/c+cT73EgH5G1f2KAGGVv3tfnEgE9y6Oclfsmnse5rwdg==]"
+  key: "![ar4oGs1A/tSmjWqs4V7AXPailP7XiHLGmId/p+EfeurfXt0+DA98Yw==]"
+    
+    
+  
+    
+  
