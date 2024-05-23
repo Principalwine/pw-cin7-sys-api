@@ -20,7 +20,8 @@ output application/json
 	    
     }
     else if(vars.requestPayload.operation == "CREATE-ADDRESS" or vars.requestPayload.operation == "UPDATE-ADDRESS"){
-    	"Addresses" : payload.CustomerList[0].Addresses
+    	"Addresses" : payload.CustomerList[0].Addresses,
+    	"LastModifiedOn": payload.CustomerList[0].LastModifiedOn
     }
     else	payload)
 }
