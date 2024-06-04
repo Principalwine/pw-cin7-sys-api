@@ -18,11 +18,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<set-variable value="#[payload]" doc:name="Set Request Payload" doc:id="29245027-3a17-4bc5-87d9-1e77514e4c2b" variableName="requestPayload" />
 		<set-payload value="#[payload.requestBody default null]" doc:name="Set Payload" doc:id="42c714e0-5df7-4050-93d0-4b3082511523" />
 		<logger level="INFO" doc:name="Log Outbound" doc:id="4ed00f38-9de5-4023-a55e-5654f223651c" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Outbound",&#10;  MetaData: "Request to CIN7",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]' />
-		<!-- [STUDIO:"Choice"]<choice doc:name="Choice" doc:id="6dddc949-3f15-4ec6-9b51-7d58f94fdcbe" >
-			<when expression="#[payload != null&#93;">
-				<ee:dynamic-evaluate doc:name="Dynamic Evaluate" doc:id="418919ff-f0c0-41e1-b5b8-2d1680c1f750" expression="#[readUrl(&quot;classpath://dwls/&quot; ++ (vars.requestPayload.dwl as String) ++ &quot;.dwl&quot;, 'text/plain')&#93;" />
-			</when>
-		</choice> [STUDIO] -->
 		<until-successful maxRetries="2" doc:name="Until Successful" doc:id="a1b41529-59ce-4281-9d71-e53242d5be82" millisBetweenRetries="30000">
 			<http:request method="#[vars.requestPayload.httpRequest.method]" doc:name="Request End System" doc:id="e2f878bd-89e1-4bfc-bf3a-682c5abbeee7" url='#[(vars.requestPayload.httpRequest.protocol as String) ++ "://" ++ (vars.requestPayload.httpRequest.host as String)  ++ (vars.requestPayload.httpRequest.url as String)]'>
 			<http:body><![CDATA[#[%dw 2.0

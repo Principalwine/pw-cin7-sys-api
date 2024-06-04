@@ -47,6 +47,9 @@ operation:
   GET-LOCATION:
     path: "/ExternalApi/v2/ref/location"
     
+  GET-SALES:
+    path: "/ExternalApi/v2/sale"
+    
 cin7:
   id: "![1F+4hnZf0/c+cT73EgH5G1f2KAGGVv3tfnEgE9y6Oclfsmnse5rwdg==]"
   key: "![ar4oGs1A/tSmjWqs4V7AXPailP7XiHLGmId/p+EfeurfXt0+DA98Yw==]"
