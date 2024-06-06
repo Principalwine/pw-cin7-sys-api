@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
-    <apikit:config name="cin7-sys-api-config" api="resource::5171e7e0-1d56-46fe-8c83-c71abc945e2a:cin7-sys-api:1.0.6:raml:zip:cin7-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="cin7-sys-api-config" api="resource::5171e7e0-1d56-46fe-8c83-c71abc945e2a:cin7-sys-api:1.0.7:raml:zip:cin7-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="53bf0fab-abe6-4976-aa40-4da1ceecd682">
         <http:listener-connection host="0.0.0.0" port="8083" />
     </http:listener-config>
@@ -152,10 +152,10 @@ output application/json
         <logger level="INFO" doc:name="Log Exit" doc:id="dd3375c3-776c-4da8-b457-d0e1183e02db" message="#[%dw 2.0&#xA;output application/json&#xA;---&#xA;{&#xA;  flowName: flow.name,&#xA;  apiName: app.name,&#xA;  Name: &quot;EXIT&quot;,&#xA;  MetaData: &quot;Ended Flow in cin7-sys-api&quot;,&#xA;  correlationId: correlationId&#xA;}]" />
     </flow>
     <flow name="post:\order:application\json:cin7-sys-api-config">
-		<logger level="INFO" doc:name="Log Start" doc:id="2792f43e-2ed0-47d2-8eb3-31020f7888f9" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ENTRY",&#10;  MetaData: "Started Flow in cin7-sys-api",&#10;  correlationId: correlationId&#10;}]' />
-		<ee:transform doc:name="Create Request" doc:id="2328166c-0b72-4c6a-a761-f4651b0206a7">
-			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
+        <logger level="INFO" doc:name="Log Start" doc:id="2792f43e-2ed0-47d2-8eb3-31020f7888f9" message="#[%dw 2.0&#xA;output application/json&#xA;---&#xA;{&#xA;  flowName: flow.name,&#xA;  apiName: app.name,&#xA;  Name: &quot;ENTRY&quot;,&#xA;  MetaData: &quot;Started Flow in cin7-sys-api&quot;,&#xA;  correlationId: correlationId&#xA;}]" />
+        <ee:transform doc:name="Create Request" doc:id="2328166c-0b72-4c6a-a761-f4651b0206a7">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -179,9 +179,19 @@ output application/json
 	//"dwl": Mule::p("operation.UPDATE-CUSTOMER.dwl") as String,
 	"requestBody": payload
 }]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="cin7-sys-api-implementation" doc:id="ff236311-bcb1-42c4-9173-3bbe21592fd9" name="cin7-sys-api-implementation" />
-		<logger level="INFO" doc:name="Log Exit" doc:id="0f1f8747-7688-44ab-a57a-192a6a1a3a6f" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "EXIT",&#10;  MetaData: "Ended Flow in cin7-sys-api",&#10;  correlationId: correlationId&#10;}]' />
+            </ee:message>
+        </ee:transform>
+        <flow-ref doc:name="cin7-sys-api-implementation" doc:id="ff236311-bcb1-42c4-9173-3bbe21592fd9" name="cin7-sys-api-implementation" />
+        <logger level="INFO" doc:name="Log Exit" doc:id="0f1f8747-7688-44ab-a57a-192a6a1a3a6f" message="#[%dw 2.0&#xA;output application/json&#xA;---&#xA;{&#xA;  flowName: flow.name,&#xA;  apiName: app.name,&#xA;  Name: &quot;EXIT&quot;,&#xA;  MetaData: &quot;Ended Flow in cin7-sys-api&quot;,&#xA;  correlationId: correlationId&#xA;}]" />
+    </flow>
+    <flow name="get:\customers:cin7-sys-api-config">
+		<logger level="INFO" doc:name="Log Start" doc:id="369b7043-5927-4fb9-99c7-8c3530242de0" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ENTRY",&#10;  MetaData: "Started Flow in cin7-sys-api",&#10;  correlationId: correlationId&#10;}]' />
+		<ee:transform doc:name="Create Request">
+            <ee:message>
+				<ee:set-payload resource="dwls/msg-req-parameter-customer-get.dwl" />
+            </ee:message>
+        </ee:transform>
+		<flow-ref doc:name="cin7-sys-api-implementation" doc:id="3a6d6d9c-395d-4811-be15-e180a632d051" name="cin7-sys-api-implementation" />
+		<logger level="INFO" doc:name="Log Exit" doc:id="2ac2ebe8-40ba-4180-8868-56151ddc4980" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "EXIT",&#10;  MetaData: "Ended Flow in cin7-sys-api",&#10;  correlationId: correlationId&#10;}]' />
     </flow>
 </mule>
