@@ -27,6 +27,12 @@ operation:
     dwl: "msg-update-customer-req"
     path: "/ExternalApi/v2/customer"
     
+  CREATE-SALES:
+    path: "/ExternalApi/v2/sale"
+    
+  CREATE-ORDER:
+    path: "/ExternalApi/v2/sale/order"
+    
   CREATE-CONTACT:
     dwl: "msg-create-customer-req"
     path: "/ExternalApi/v2/customer"
@@ -47,11 +53,12 @@ operation:
   GET-LOCATION:
     path: "/ExternalApi/v2/ref/location"
     
+  GET-SALES:
+    path: "/ExternalApi/v2/sale"
+    
+  GET-TAX:
+    path: "/ExternalApi/v2/ref/tax"
+    
 cin7:
   id: "![1F+4hnZf0/c+cT73EgH5G1f2KAGGVv3tfnEgE9y6Oclfsmnse5rwdg==]"
   key: "![ar4oGs1A/tSmjWqs4V7AXPailP7XiHLGmId/p+EfeurfXt0+DA98Yw==]"
-    
-    
-  
-    
-  

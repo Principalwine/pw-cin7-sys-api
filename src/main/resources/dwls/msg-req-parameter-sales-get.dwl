@@ -7,7 +7,7 @@ output application/json
 		"protocol": Mule::p('endSystem.CIN7.protocol') as String,
 		"method": "GET",
 		"host": Mule::p('endSystem.CIN7.host') as String,
-		"url": Mule::p('operation.GET-CUSTOMER.path') as String,
+		"url": Mule::p('operation.GET-SALES.path') as String,
 		"queryParams": {
 			"ID": attributes.queryParams.Id
 		},
@@ -19,7 +19,7 @@ output application/json
   			"api-auth-applicationkey": Mule::p('secure::cin7.key')
 		},
 	},
-	"operation": "GET-CUSTOMER",
+	"operation": "GET-SALES",
 	//"dwl": Mule::p("operation.GET-LOCATION.dwl") as String,
 	"requestBody": null
 }

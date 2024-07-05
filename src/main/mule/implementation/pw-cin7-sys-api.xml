@@ -18,11 +18,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<set-variable value="#[payload]" doc:name="Set Request Payload" doc:id="29245027-3a17-4bc5-87d9-1e77514e4c2b" variableName="requestPayload" />
 		<set-payload value="#[payload.requestBody default null]" doc:name="Set Payload" doc:id="42c714e0-5df7-4050-93d0-4b3082511523" />
 		<logger level="INFO" doc:name="Log Outbound" doc:id="4ed00f38-9de5-4023-a55e-5654f223651c" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Outbound",&#10;  MetaData: "Request to CIN7",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]' />
-		<!-- [STUDIO:"Choice"]<choice doc:name="Choice" doc:id="6dddc949-3f15-4ec6-9b51-7d58f94fdcbe" >
-			<when expression="#[payload != null&#93;">
-				<ee:dynamic-evaluate doc:name="Dynamic Evaluate" doc:id="418919ff-f0c0-41e1-b5b8-2d1680c1f750" expression="#[readUrl(&quot;classpath://dwls/&quot; ++ (vars.requestPayload.dwl as String) ++ &quot;.dwl&quot;, 'text/plain')&#93;" />
-			</when>
-		</choice> [STUDIO] -->
 		<until-successful maxRetries="2" doc:name="Until Successful" doc:id="a1b41529-59ce-4281-9d71-e53242d5be82" millisBetweenRetries="30000">
 			<http:request method="#[vars.requestPayload.httpRequest.method]" doc:name="Request End System" doc:id="e2f878bd-89e1-4bfc-bf3a-682c5abbeee7" url='#[(vars.requestPayload.httpRequest.protocol as String) ++ "://" ++ (vars.requestPayload.httpRequest.host as String)  ++ (vars.requestPayload.httpRequest.url as String)]'>
 			<http:body><![CDATA[#[%dw 2.0
@@ -58,48 +53,6 @@ vars.requestPayload.httpRequest.headers]]]></http:headers>
 			</on-error-propagate>
 		</error-handler>
 	</flow>
-	<!-- [STUDIO:"get-customer"]<flow name="get-customer" doc:id="450a0c8e-5b6e-4ec3-b5ea-433f7fd576b4" >
-		<http:listener doc:name="Listener" doc:id="3f948110-1165-4643-a707-b34db62315d6" config-ref="http_listener_config1" path="/customer" allowedMethods="GET"/>
-		<logger level="INFO" doc:name="Log Entry" doc:id="90aba99b-9132-4075-9593-4fd18f1710de" message="#[payload&#93;"/>
-		<ee:transform doc:name="Create Request" doc:id="b5d358e5-86db-4980-a247-47907ae73563" >
-			<ee:message >
-				<ee:set-payload resource="dwls/msg-req-parameter-customer-get.dwl" />
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="ba47bca6-41fb-449c-aea8-b73665b0a10a" name="pw-cin7-sys-api-implementation" />
-	</flow> [STUDIO] -->
-	<!-- [STUDIO:"post-customer"]<flow name="post-customer" doc:id="7413784d-14c7-407e-852a-f89a7b514c76" >
-		<http:listener doc:name="Listener" doc:id="b1cc5dd0-98eb-4b84-ace6-3e71a78d6f9b" config-ref="http_listener_config1" path="/customer" allowedMethods="POST" />
-		<logger level="INFO" doc:name="Log Entry" doc:id="5d7e095d-7d07-40f4-bdb9-4db9aa5b4bc8" message="#[payload&#93;" />
-		<ee:transform doc:name="Create Request" doc:id="b6eb1696-fb71-45d8-b5a1-1f358a05f474" >
-			<ee:message >
-				<ee:set-payload resource="dwls/msg-req-parameter-customer-create.dwl" />
-				
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="b3ab10da-cbe1-4e82-b716-198efea9655a" name="pw-cin7-sys-api-implementation" />
-	</flow> [STUDIO] -->
-	<!-- [STUDIO:"put-customer"]<flow name="put-customer" doc:id="d446a589-736c-4c72-886f-9ea9dcba59f9" >
-		<http:listener doc:name="Listener" doc:id="831827e6-95c7-40d0-af9b-9d395daf5781" config-ref="http_listener_config1" path="/customer" allowedMethods="PUT"/>
-		<logger level="INFO" doc:name="Log Entry" doc:id="6eaca846-3325-4577-b99b-30664ca76dfb" message="#[payload&#93;" />
-		<ee:transform doc:name="Create Request" doc:id="80d65ed0-2453-4252-a8a6-2cc3e64e3b86" >
-			<ee:message >
-				<ee:set-payload resource="dwls/msg-req-parameter-customer-update.dwl" />
-				
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="0ceafe54-cb15-43fb-a86f-440e51c6ea16" name="cin7-sys-api-implementation" />
-	</flow> [STUDIO] -->
-	<!-- [STUDIO:"get-products"]<flow name="get-products" doc:id="30fb95dc-241f-41b1-85fd-fbdca0d0e309" >
-		<http:listener doc:name="Listener" doc:id="47e6d437-afbd-4ae3-a599-64ff949ccc76" config-ref="http_listener_config1" path="/product"/>
-		<logger level="INFO" doc:name="Log Entry" doc:id="af38fd56-52dd-4e45-9d0b-3f14957502bd" message="#[payload&#93;" />
-		<ee:transform doc:name="Create Request" doc:id="90f684ac-e824-4869-96bb-9c95cee578ed">
-			<ee:message>
-				<ee:set-payload resource="dwls/msg-req-parameter-customer-create.dwl" />
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="00f12988-a864-4050-92cb-b973af15511d" name="pw-cin7-sys-api-implementation"/>
-	</flow> [STUDIO] -->
 	
 	
 </mule>
