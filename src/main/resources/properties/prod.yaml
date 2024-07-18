@@ -50,6 +50,9 @@ operation:
   GET-SALES:
     path: "/ExternalApi/v2/sale"
     
+  GET-TAX:
+    path: "/ExternalApi/v2/ref/tax"
+    
 cin7:
   id: "![iik8f1xM4s7E7+nO5gTAzGxyeDQDTYfcVgKzDD43qk016e1J9ZD//A==]"
   key: "![a7tAu/8DJuanf2giA3JjhWHQ6WHvr3PQiVzQIbSZgMTozz9Hgp3ubA==]"
