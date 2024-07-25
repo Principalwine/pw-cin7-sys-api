@@ -27,6 +27,12 @@ operation:
     dwl: "msg-update-customer-req"
     path: "/ExternalApi/v2/customer"
     
+  CREATE-SALES:
+    path: "/ExternalApi/v2/sale"
+  
+  CREATE-ORDER:
+    path: "/ExternalApi/v2/sale/order"
+  
   CREATE-CONTACT:
     dwl: "msg-create-customer-req"
     path: "/ExternalApi/v2/customer"
